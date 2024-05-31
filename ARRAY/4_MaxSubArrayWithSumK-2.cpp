@@ -1,3 +1,4 @@
+// This code has optimal solution for the case where all elements are negative or positive
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
@@ -23,15 +24,15 @@ int main()
         sum += v[i];
         if (sum == k)
             len = max(len, i + 1);
-        ll res=sum-k;
-        if(m.find(res)!=m.end())
+        ll res = sum - k;
+        if (m.find(res) != m.end())
         {
-            len=max(len,i-m[res]);
+            len = max(len, i - m[res]);
         }
         if (m.find(sum) == m.end())
         {
             m[sum] = i;
         }
     }
-    cout<<len<<endl;
+    cout << len << endl;
 }
