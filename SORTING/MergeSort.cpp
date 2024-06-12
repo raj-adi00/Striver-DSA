@@ -6,7 +6,7 @@ using namespace std;
 #define all(v) (v).begin(), (v).end()
 #define mod 1000000007
 /*       <<<<<CODE HERE>>>>>      */
-void Merge(int arr[], int low, int mid, int high)
+void Merge(int arr[], int low, int mid, int high)//O N
 {
     vector<int> temp;
     int left = low;
@@ -37,7 +37,7 @@ void Merge(int arr[], int low, int mid, int high)
     for (int i = low; i <= high; i++)
         arr[i] = temp[i - low];
 }
-void Merge_sort(int arr[], int low, int high)
+void Merge_sort(int arr[], int low, int high)//O log N
 {
     if (low >= high)
         return;
