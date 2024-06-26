@@ -38,6 +38,6 @@ int main()
     };
     f(0);
 
-    //TC: O(2^N)
-    //SC: O(N)
+    //TC: O((2^N)*N)
+    //SC: O(N)+O(N) 
 }
