@@ -51,10 +51,4 @@ int main()
     }
  }
  cout<<dp[l1-1][l2-1];
- for(auto vec:dp)
- {
-    for(auto val:vec)
-    cout<<val<<" ";
-    cout<<endl;
- }
 }

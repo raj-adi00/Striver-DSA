@@ -1,2 +1,3 @@
-sea
-eat
+5 4
+adceb
+*a*b
