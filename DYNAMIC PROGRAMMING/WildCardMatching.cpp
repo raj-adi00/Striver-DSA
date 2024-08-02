@@ -115,16 +115,21 @@ int main()
       dp[i][0] = false;
    for (int i = 1; i <= l2; i++)
    {
-      int flag = true;
-      for (int j = 1; j <= i; j++)
-      {
-         if (b[j - 1] != '*')
-         {
-            flag = false;
-            break;
-         }
-      }
-      dp[0][i] = flag;
+      // int flag = true;
+      // for (int j = 1; j <= i; j++)
+      // {
+      //    if (b[j - 1] != '*')
+      //    {
+      //       flag = false;
+      //       break;
+      //    }
+      // }
+      // dp[0][i] = flag;
+
+      if(b[i-1]!='*')
+      break;
+      else
+      dp[0][i]=true;
    }
    for (int i = 1; i <= l1; i++)
    {
@@ -138,7 +143,8 @@ int main()
         dp[i][j]=ans;
       }
    }
-   cout<<dp[l1][l2];
+   cout<<dp[l1][l2]<<endl;
+
 
 
 
