@@ -28,7 +28,7 @@ istream &operator>>(istream &in, vector<T> &v)
   return in;
 }
 /*       <<<<<CODE HERE>>>>>      */
-int main()
+int main()      //sc:o(n*m)   Tc:O(n*m)
 {
   ios_base::sync_with_stdio(0), cin.tie(0);
   int n, m, sr, sc, color;
