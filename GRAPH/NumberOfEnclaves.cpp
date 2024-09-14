@@ -11,38 +11,34 @@ using namespace std;
 template <typename T> ostream &operator<<(ostream &out, const vector<T> &v) { for (const auto &x : v) out << x << ' '; return out; }
 template <typename T> istream &operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in; }
 /*       <<<<<CODE HERE>>>>>      */
-// TC: O(V+2E)+ O(V)
-// Sc: O(V)
-bool FindCycle(int V,vector<vector<int>>& adj){
-   vector<int> vis(V, 0);
-queue<pii> q;
-
-for (int i = 0; i < V; i++) {
-    if (!vis[i]) {
-        q.push({i, -1});
-        vis[i] = 1; 
-        
-        while (!q.empty()) {
-            int ele = q.front().first;
-            int parent = q.front().second;
-            q.pop();
-            
-            for (auto val : adj[ele]) {
-                if (!vis[val]) {
-                    q.push({val, ele});
-                    vis[val] = 1; 
-                } else if (val != parent) {
-                    return true;
-                }
-            }
-        }
-    }
-}
-return false;
-
-}
 int main()
 {
  ios_base::sync_with_stdio(0), cin.tie(0);
+ vector<vector<int>> v;
+ int n=v.size(),m=v[0].size();
 
+vector<vector<int>> vis(n,vector<int>(m,0));
+vector<int> row={-1,1,0,0},col={0,0,1,-1};
+int cnt=0;
+ function<void(int r,int c)>DFS=[&](int r,int c)->void{
+    vis[r][c]=1;
+    cnt++;
+    for(int k=0;k<4;k++)
+    {
+        int nrow=r+row[k];
+        int ncol=c+col[k];
+        if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol]&& v[nrow][ncol]==1)
+        DFS(nrow,ncol);
+    }
+ };
+ int tot=0;
+ for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+        if(v[i][j]==1)
+        tot++;
+        if(v[i][j]==1 && (i==0||i==(n-1)|| j==0|| j==(m-1)) && !vis[i][j])
+        DFS(i,j);
+    }
+ }
+ cout<<tot-cnt<<endl;
 }

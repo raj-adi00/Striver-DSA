@@ -11,38 +11,27 @@ using namespace std;
 template <typename T> ostream &operator<<(ostream &out, const vector<T> &v) { for (const auto &x : v) out << x << ' '; return out; }
 template <typename T> istream &operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in; }
 /*       <<<<<CODE HERE>>>>>      */
-// TC: O(V+2E)+ O(V)
-// Sc: O(V)
-bool FindCycle(int V,vector<vector<int>>& adj){
-   vector<int> vis(V, 0);
-queue<pii> q;
-
-for (int i = 0; i < V; i++) {
-    if (!vis[i]) {
-        q.push({i, -1});
-        vis[i] = 1; 
-        
-        while (!q.empty()) {
-            int ele = q.front().first;
-            int parent = q.front().second;
-            q.pop();
-            
-            for (auto val : adj[ele]) {
-                if (!vis[val]) {
-                    q.push({val, ele});
-                    vis[val] = 1; 
-                } else if (val != parent) {
-                    return true;
-                }
-            }
+bool DFS(int node,int parent,vector<int> adj[],vector<int> & vis){
+    vis[node]=1;
+    for(auto val:adj[node]){
+        if(vis[val]==0){
+        if(DFS(val,node,adj,vis))
+        return true;
         }
+        else if(val!=parent)
+        return true;
     }
+    return false;
+}
+bool findCycle(int V,vector<int> adj[]){
+vector<int> vis(V,0);
+for(int i=0;i<V;i++){
+    if(!vis[i])
+    if(DFS(i,-1,adj,vis))return true;
 }
 return false;
-
 }
 int main()
 {
  ios_base::sync_with_stdio(0), cin.tie(0);
-
 }
