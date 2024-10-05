@@ -86,50 +86,83 @@
 //     }
 // };
 
-
 #include <bits/stdc++.h>
 using namespace std;
+
+class Solution
+{
+public:
+    vector<int> eventualSafeNodes(int v, vector<int> adj[])
+    {
+        vector<int> vis(v, 0), pathVis(v, 0);
+        vector<int> calc(v, 0);
+        function<bool(int)> DFS = [&](int i) -> bool
+        {
+            vis[i] = 1;
+            pathVis[i] = 1;
+            bool check = false;
+            for (auto val : adj[i])
+            {
+                if (!vis[val])
+                    check = check || DFS(val);
+                else
+                {
+                    if (pathVis[val] == 1)
+                        return true;
+                }
+            }
+            if (check == true)
+            {
+                calc[i] = 0;
+                return check;
+            }
+            pathVis[i] = 0;
+            calc[i] = 1;
+            return check;
+        };
+        for (int i = 0; i < v; i++)
+        {
+            if (!vis[i])
+                DFS(i);
+        }
+        vector<int> res;
+        for (int i = 0; i < v; i++)
+        {
+            if (calc[i] == 1)
+                res.push_back(i);
+        }
+        return res;
+    }
+};
+
+//{ Driver Code Starts.
+
 int main()
 {
-    ios_base::sync_with_stdio(0), cin.tie(0);
-    int v;
-    vector<vector<int>> adj;
+    int t;
+    cin >> t;
+    while (t--)
+    {
 
-    vector<int> vis(v, 0), pathVis(v, 0);
-    vector<int> calc(v, 0);
-    function<bool(int)> DFS = [&](int i) -> bool
-    {
-        vis[i] = 1;
-        pathVis[i] = 1;
-        bool check = false;
-        for (auto val : adj[i])
+        int V, E;
+        cin >> V >> E;
+        vector<int> adj[V];
+
+        for (int i = 0; i < E; i++)
         {
-            if (!vis[val])
-                check = check || DFS(val);
-            else
-            {
-                if (pathVis[val] == 1)
-                    return true;
-            }
+            int u, v;
+            cin >> u >> v;
+            adj[u].push_back(v);
         }
-        if (check == true)
+
+        Solution obj;
+        vector<int> safeNodes = obj.eventualSafeNodes(V, adj);
+        for (auto i : safeNodes)
         {
-            calc[i] = 0;
-            return check;
+            cout << i << " ";
         }
-        pathVis[i] = 0;
-        calc[i] = 1;
-        return check;
-    };
-    for (int i = 0; i < v; i++)
-    {
-        if (!vis[i])
-            DFS(i);
-    }
-    vector<int> res;
-    for (int i = 0; i < v; i++)
-    {
-        if (calc[i] == 1)
-            res.push_back(i);
+        cout << endl;
     }
 }
+
+// } Driver Code Ends
