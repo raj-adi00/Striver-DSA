@@ -8,6 +8,7 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
+  //There can be two cases where Dictionary is invalid: 1. If shorter length fall after larger legth though they have no difference till shorter string length. 2.If there is cycle means a->b->c->a eg: adi,bdi,cdi,appu
     string findOrder(string v[], int n, int k) {
         // code here
         vector<vector<int>> adj(k);

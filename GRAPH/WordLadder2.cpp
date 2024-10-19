@@ -89,4 +89,184 @@ public:
         }
         return res;
     }
+
+    vector<vector<string>> f(string a, string b, vector<string> &v){
+    unordered_set<string> s(v.begin(),v.end());
+    queue<vector<string>> q;
+    vector<string> usedOnLevel;
+    q.push({a});
+    s.erase(a);
+    vector<vector<string>> ans;
+    usedOnLevel.push_back(a);
+    int level=0;
+    while(!q.empty()){
+     auto vec=q.front();
+     q.pop();
+     if(vec.size()>level){
+        level++;
+        for(auto val:usedOnLevel)
+        s.erase(val);
+        usedOnLevel.clear();
+     }
+     auto word=vec.back();
+     if(word==b){
+        if(ans.size()==0)
+        ans.push_back(vec);
+        else if(ans[0].size()==vec.size())
+        ans.push_back(vec);
+     }else{
+       for(int i=0;i<word.size();i++){
+        char original =word[i];
+        for(int j=97;j<=122;j++){
+            word[i]=(char)j;
+            if(s.find(word)!=s.end()){
+                vec.push_back(word);
+                q.push(vec);
+                vec.pop_back();
+                usedOnLevel.push_back(word);
+            }
+        }
+        word[i]=original;
+       }
+     }
+    }
+    return ans;
+}
+   
+    
+     vector<vector<string>> fun(string a,string b,vector<string> &v){
+        unordered_set<string> s(v.begin(),v.end());
+        queue<string> q;
+        q.push(a);
+        map<string,int> m;
+        m[a]=1;
+        // cout<<1<<endl;
+        s.erase(a);
+        while (!q.empty())
+        {
+            auto x=q.front();q.pop();
+            for(int i=0;i<x.length();i++){
+                string w=x;
+                for(char j='a';j<='z';j++){
+                    x[i]=j;
+                    if(s.find(x)!=s.end()){
+                        m[x]=m[w]+1;
+                        s.erase(x);
+                        q.push(x);
+                    }
+                }
+                x=w;
+            }
+        }
+        // for(auto pr:m)
+        // cout<<pr.first<<" "<<pr.second<<endl;
+        vector<vector<string>> res;
+        if(m.find(b)==m.end())
+        return res;
+        vector<string> temp;
+        for(auto val:v)
+        s.insert(val);
+        function<void(string)>backtrack=[&](string y)->void{
+        if(y==a){
+            reverse(temp.begin(),temp.end());
+            res.push_back(temp);
+             reverse(temp.begin(),temp.end());
+        }else{
+           
+           for(int i=0;i<y.length();i++){
+            string w=y;
+            for(char j='a';j<='z';j++){    
+                y[i]=j;
+                if(m.find(w)!=m.end() && m[y]==m[w]-1){
+                    temp.push_back(y);
+                   backtrack(y);
+                    temp.pop_back();
+                }
+            }
+            y=w;
+           }
+        }
+        };
+        temp.push_back(b);
+        backtrack(b);
+        return res;
+     }
+
+
+//     vector<vector<string>> fun(string a, string b, vector<string> &v) {
+//     unordered_set<string> s(v.begin(), v.end());
+//     queue<string> q;
+//     q.push(a);
+//     map<string, int> m;  
+//     m[a] = 1;           
+//     s.erase(a);         
+
+//     // BFS to find the shortest transformation sequence
+//     while (!q.empty()) {
+//         auto x = q.front(); q.pop();
+//         for (int i = 0; i < x.length(); i++) {
+//             string w = x;
+//             for (char j = 'a'; j <= 'z'; j++) {
+//                 w[i] = j; 
+//                 if (s.find(w) != s.end()) {
+//                     m[w] = m[x] + 1; 
+//                     s.erase(w);       
+//                     q.push(w);        
+//                 }
+//             }
+//         }
+//     }
+
+//     vector<vector<string>> res;
+//     if (m.find(b) == m.end())
+//         return res;  
+
+//     vector<string> temp;
+//     function<void(string)> backtrack = [&](string y) -> void {
+//         if (y == a) {
+//             temp.push_back(y);  
+//             reverse(temp.begin(), temp.end());  
+//             res.push_back(temp); 
+//             reverse(temp.begin(), temp.end());  
+//             temp.pop_back();  
+//             return;
+//         }
+
+//         temp.push_back(y);  // Add the current word to the path
+//         for (int i = 0; i < y.length(); i++) {
+//             string w = y;
+//             for (char j = 'a'; j <= 'z'; j++) {
+//                 w[i] = j;
+//                 if (m.find(w) != m.end() && m[w] == m[y] - 1) {
+//                     backtrack(w);  
+//                 }
+//             }
+//         }
+//         temp.pop_back();  
+//     };
+
+//     backtrack(b);  
+//     return res;
+// }
+
+     void solve() {
+        string start = "hit";
+        string end = "cog";
+        vector<string> wordList = {"hot", "dot", "dog", "lot", "log", "cog"};
+
+        vector<vector<string>> result = fun(start, end, wordList);
+
+        cout << "All possible paths from " << start << " to " << end << ":\n";
+        for (const auto& path : result) {
+            for (const auto& word : path) {
+                cout << word << " ";
+            }
+            cout << "\n";
+        }
+    }
 }; 
+int main() {
+    Solution sol;
+    sol.solve();
+    return 0;
+}
