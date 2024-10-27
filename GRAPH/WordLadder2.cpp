@@ -132,8 +132,8 @@ public:
     }
     return ans;
 }
-   
-    
+
+
      vector<vector<string>> fun(string a,string b,vector<string> &v){
         unordered_set<string> s(v.begin(),v.end());
         queue<string> q;
@@ -164,8 +164,8 @@ public:
         if(m.find(b)==m.end())
         return res;
         vector<string> temp;
-        for(auto val:v)
-        s.insert(val);
+        // for(auto val:v)
+        // s.insert(val);
         function<void(string)>backtrack=[&](string y)->void{
         if(y==a){
             reverse(temp.begin(),temp.end());
