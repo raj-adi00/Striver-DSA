@@ -1,1 +1,2 @@
-The number of distinct shortest paths from node 0 to node 6 is: 3
+different
+same
