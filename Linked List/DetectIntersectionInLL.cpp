@@ -55,6 +55,8 @@ class Solution {
         return nullptr;
     }
 
+
+//TC    O(n1+n2)
     ListNode* getIntersectionNode3(ListNode* headA, ListNode* headB) {
         ListNode *temp1 = headA, *temp2 = headB;
         if (!temp1 || !temp2) return nullptr;
